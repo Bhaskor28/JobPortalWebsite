@@ -18,6 +18,7 @@ namespace JobPortal.Domain.Entities
         public string ExperienceRequirement { get; set; }
         public DateTime Deadline { get; set; }
         public int EmploymentTypeId { get; set; }
+        public EmploymentType EmploymentType { get; set; }
         public int JobCategoryId { get; set; }
         public JobPostStatus Status { get; set; }
         public Category Category { get; set; }
