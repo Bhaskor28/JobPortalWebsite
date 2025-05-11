@@ -70,26 +70,64 @@ namespace JobPortal.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ApprovedByAdminId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
+                    b.Property<DateTime>("Deadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("EducationRequirement")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
+                    b.Property<int>("EmployerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmploymentTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ExperienceRequirement")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
+                    b.Property<int>("JobCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogoPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("MaxSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MinSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmploymentTypeId");
 
                     b.HasIndex("JobCategoryId");
 
@@ -98,6 +136,12 @@ namespace JobPortal.Infrastructure.Migrations
 
             modelBuilder.Entity("JobPortal.Domain.Entities.JobPost", b =>
                 {
+                    b.HasOne("JobPortal.Domain.Entities.EmploymentType", "EmploymentType")
+                        .WithMany("JobPosts")
+                        .HasForeignKey("EmploymentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("JobPortal.Domain.Entities.Category", "Category")
                         .WithMany("JobPosts")
                         .HasForeignKey("JobCategoryId")
@@ -105,9 +149,16 @@ namespace JobPortal.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("EmploymentType");
                 });
 
             modelBuilder.Entity("JobPortal.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("JobPosts");
+                });
+
+            modelBuilder.Entity("JobPortal.Domain.Entities.EmploymentType", b =>
                 {
                     b.Navigation("JobPosts");
                 });

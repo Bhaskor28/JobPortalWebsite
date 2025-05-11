@@ -60,26 +60,20 @@
                             <div class="small-section-tittle2">
                                 <h4>Job Type</h4>
                             </div>
-                            <label class="container">
-                                Full Time
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">
-                                Part Time
-                                <input type="checkbox" checked="checked active">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">
-                                Remote
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">
-                                Freelance
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
+                                <label class="container">
+                                    Any 
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            @foreach(var jobType in ViewBag.JobTypes){
+                                <label class="container">
+                                    @jobType.Name
+                                    <input type="checkbox" value="@jobType.Id">
+                                    <span class="checkmark"></span>
+                                </label>
+                                }
+                            
+                            
                         </div>
                         <!-- select-Categories End -->
                     </div>
@@ -246,9 +240,10 @@
                                 @{
                                     string employmentType = item.EmploymentTypeId switch
                                     {
-                                        0 => "Full Time",
-                                        1 => "Part Time",
-                                        2 => "Freelance"
+                                        2 => "Full Time",
+                                        3 => "Part Time",
+                                        4 => "Contract",
+                                        5 => "Internship"
                                         
                                     };
 
