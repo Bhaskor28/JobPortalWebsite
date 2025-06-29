@@ -2,9 +2,9 @@
 
 namespace JobPortal.Domain.Entities
 {
-    public class EmploymentType : BaseEntity
+    public class Experience : BaseEntity
     {
-        public string Name { get; set; } = default!;
+        public string Name { get; set; }
         public ICollection<JobPost> JobPosts { get; set; }
     }
 }

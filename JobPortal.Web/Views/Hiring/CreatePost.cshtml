@@ -1,0 +1,153 @@
+﻿@using JobPortal.Application.JobPosts
+@model JobPostVM
+
+<section class="job-post-company pt-120 pb-120">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-10">
+                <div class="card p-4">
+                    <div class="card-body">
+                        <h3 class="text-center mb-4">📝 Create Job Post</h3>
+
+                        <form method="post">
+
+                            <div class="row g-3">
+                                <!-- Title -->
+                                <div class="col-md-6">
+                                    <label asp-for="Title" class="form-label">Job Title</label>
+                                    <input asp-for="Title" type="text" class="form-control">
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+
+                                <!-- Company -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Company</label>
+
+                                    <select asp-for="CompanyId" class="form-select">
+                                        <option disabled selected>Select Company</option>
+                                        @foreach (var company in ViewBag.Companies)
+                                        {
+                                            <option value="@company.Id">@company.Name</option>
+                                        }
+
+                                    </select>
+                                    <span asp-validation-for="CompanyId" class="text-danger"></span>
+                                </div>
+
+                                <!-- Logo Upload -->
+                                <div class="col-md-6">
+                                    <label asp-for="LogoPath" class="form-label">Company Logo</label>
+                                    <input asp-for="LogoPath" type="file" class="form-control" />
+                                </div>
+
+                                <!-- Category -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Job Category</label>
+                                    <select asp-for="JobCategoryId" class="form-select">
+                                        <option selected disabled>--select any--</option>
+                                        @foreach (var jobCategory in ViewBag.JobCategories)
+                                        {
+                                            <option value="@jobCategory.Id">@jobCategory.Name</option>
+
+                                        }
+                                    </select>
+                                    <span asp-validation-for="JobCategoryId" class="text-danger"></span>
+                                </div>
+
+                                <!-- Employment Type -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Employment Type</label>
+                                    <select asp-for="EmploymentTypeId" class="form-select">
+                                        <option selected disabled>--select any--</option>
+                                        @foreach (var empType in ViewBag.EmploymetTypes)
+                                        {
+                                            <option value="@empType.Id" selected>@empType.Name</option>
+                                        }
+
+                                    </select>
+                                    <span asp-validation-for="EmploymentTypeId" class="text-danger"></span>
+                                </div>
+
+                                <!-- Location -->
+                                <div class="col-md-6">
+                                    <label asp-for="LocationId" class="form-label">Location</label>
+                                    <input asp-for="LocationId" type="text" class="form-control">
+                                    <span asp-validation-for="LocationId" class="text-danger"></span>
+                                </div>
+
+                                <!-- Experience -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Experience Level</label>
+                                    <select asp-for="ExperienceId" class="form-select">
+                                        <option selected disabled>--select any--</option>
+                                        @foreach (var experience in ViewBag.Experience)
+                                        {
+                                            <option value="@experience.Id">@experience.Name</option>
+                                        }
+                                    </select>
+                                    <span asp-validation-for="ExperienceId" class="text-danger"></span>
+                                </div>
+
+                                <!-- Min/Max Salary -->
+                                <div class="col-md-3">
+                                    <label asp-for="MinSalary" class="form-label">Min Salary (USD)</label>
+                                    <input asp-for="MinSalary" type="number" class="form-control" value="3500">
+                                    <span asp-validation-for="MaxSalary" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <label asp-for="MaxSalary" class="form-label">Max Salary (USD)</label>
+                                    <input asp-for="MaxSalary"  type="number" class="form-control">
+                                    <span asp-validation-for="MaxSalary" class="text-danger"></span>
+                                </div>
+
+                                <!-- Education Requirement -->
+                                <div class="col-12">
+                                    <label asp-for="EducationRequirement" class="form-label">Education Requirement</label>
+                                    <input asp-for="EducationRequirement" type="text" class="form-control">
+                                    
+                                </div>
+
+                                <!-- Experience Requirement -->
+                                <div class="col-12">
+                                    <label asp-for="ExperienceRequirement" class="form-label">Experience Requirement</label>
+                                    <input asp-for="ExperienceRequirement" type="text" class="form-control" value="Minimum 3 years in .NET Core development">
+                                    <span asp-validation-for="EducationRequirement" class="text-danger"></span>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="col-12">
+                                    <label asp-for="Description" class="form-label">Job Description</label>
+                                    <textarea asp-for="Description" class="form-control" rows="4">
+Responsible for designing and developing backend services using .NET Core and Entity Framework.
+Collaborate with front-end teams and product owners.
+                                    </textarea>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+
+                                <!-- Vacancy -->
+                                <div class="col-md-6">
+                                    <label asp-for="Vacancy" class="form-label">Vacancy</label>
+                                    <input asp-for="Vacancy" type="number" class="form-control" value="2">
+                                    <span asp-validation-for="Vacancy" class="text-danger"></span>
+                                </div>
+
+                                <!-- Deadline -->
+                                <div class="col-md-6">
+                                    <label asp-for="Deadline" class="form-label">Application Deadline</label>
+                                    <input asp-for="Deadline" type="date" class="form-control" value="2025-07-31">
+                                    <span asp-validation-for="Deadline" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <a href="@Url.Action("RegisterCompany","hiring")" class="btn btn-outline-secondary text-white">Register Your Company</a>
+                                <button type="submit" class="btn btn-primary btn-lg">Post Job</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

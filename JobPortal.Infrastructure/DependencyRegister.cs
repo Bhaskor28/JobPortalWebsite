@@ -18,9 +18,6 @@ namespace JobPortal.Infrastructure
             {
                 options.UseSqlServer(configuration.GetConnectionString("Connection"));
             });
-            services.AddScoped<IJobPostService, JobPostService>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IEmploymentTypeService, EmploymentTypeService>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
             return services;
