@@ -52,5 +52,7 @@ namespace JobPortal.Web.Controllers
             ViewBag.Locations = await _locationService.GetLocationByIdAsync(jobpost.LocationId);
             return View(jobpost);
         }
+
     }
 }
+

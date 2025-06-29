@@ -137,11 +137,31 @@ namespace JobPortal.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
+                    b.Property<DateTime>("Deadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("EducationRequirement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EmployerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmploymentTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ExperienceRequirement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("JobCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -164,12 +184,12 @@ namespace JobPortal.Infrastructure.Migrations
                     b.Property<string>("LogoPath")
                         .HasColumnType("nvarchar(max)");
 
+
                     b.Property<decimal>("MaxSalary")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("MinSalary")
                         .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -184,7 +204,6 @@ namespace JobPortal.Infrastructure.Migrations
                     b.HasIndex("EmploymentTypeId");
 
                     b.HasIndex("ExperienceId");
-
                     b.HasIndex("JobCategoryId");
 
                     b.HasIndex("LocationId");
@@ -214,6 +233,7 @@ namespace JobPortal.Infrastructure.Migrations
 
             modelBuilder.Entity("JobPortal.Domain.Entities.JobPost", b =>
                 {
+
                     b.HasOne("JobPortal.Domain.Entities.Company", "Company")
                         .WithMany("JobPosts")
                         .HasForeignKey("CompanyId")
@@ -225,13 +245,11 @@ namespace JobPortal.Infrastructure.Migrations
                         .HasForeignKey("EmploymentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
                     b.HasOne("JobPortal.Domain.Entities.Experience", "Experience")
                         .WithMany("JobPosts")
                         .HasForeignKey("ExperienceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
                     b.HasOne("JobPortal.Domain.Entities.Category", "Category")
                         .WithMany("JobPosts")
                         .HasForeignKey("JobCategoryId")
@@ -245,7 +263,6 @@ namespace JobPortal.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-
                     b.Navigation("Company");
 
                     b.Navigation("EmploymentType");
@@ -259,12 +276,10 @@ namespace JobPortal.Infrastructure.Migrations
                 {
                     b.Navigation("JobPosts");
                 });
-
             modelBuilder.Entity("JobPortal.Domain.Entities.Company", b =>
                 {
                     b.Navigation("JobPosts");
                 });
-
             modelBuilder.Entity("JobPortal.Domain.Entities.EmploymentType", b =>
                 {
                     b.Navigation("JobPosts");
@@ -279,7 +294,7 @@ namespace JobPortal.Infrastructure.Migrations
                 {
                     b.Navigation("JobPosts");
                 });
-#pragma warning restore 612, 618
+
         }
     }
 }

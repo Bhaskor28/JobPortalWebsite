@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.Infrastructure.Migrations
 {
     [DbContext(typeof(JobPortalDbContext))]
-    [Migration("20250508195903_addedcategroies")]
-    partial class addedcategroies
+    [Migration("20250510064350_addeddatabase")]
+    partial class addeddatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,46 @@ namespace JobPortal.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("JobPortal.Domain.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("JobPortal.Domain.Entities.EmploymentType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmploymentTypes");
+                });
 
             modelBuilder.Entity("JobPortal.Domain.Entities.JobPost", b =>
                 {
@@ -90,7 +130,40 @@ namespace JobPortal.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("JobPost");
+                    b.HasIndex("EmploymentTypeId");
+
+                    b.HasIndex("JobCategoryId");
+
+                    b.ToTable("JobPosts");
+                });
+
+            modelBuilder.Entity("JobPortal.Domain.Entities.JobPost", b =>
+                {
+                    b.HasOne("JobPortal.Domain.Entities.EmploymentType", "EmploymentType")
+                        .WithMany("JobPosts")
+                        .HasForeignKey("EmploymentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JobPortal.Domain.Entities.Category", "Category")
+                        .WithMany("JobPosts")
+                        .HasForeignKey("JobCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("EmploymentType");
+                });
+
+            modelBuilder.Entity("JobPortal.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("JobPosts");
+                });
+
+            modelBuilder.Entity("JobPortal.Domain.Entities.EmploymentType", b =>
+                {
+                    b.Navigation("JobPosts");
                 });
 #pragma warning restore 612, 618
         }

@@ -70,5 +70,28 @@ namespace JobPortal.Application.JobPosts
             var pagedJobposts = PaginatedList<JobPostVM>.CreatePagination(projectedQuery, pageNumber, pageSize);
             return await Task.FromResult(pagedJobposts);
         }
+
+        public async Task<PagedResult<JobPostVM>> GetFilteredJobPostsAsync(string? categoryId, int page, int pageSize)
+        {
+            var allPosts = await _jobpostservice.GetAllAsync();
+            var filteredPosts = allPosts.AsQueryable();
+
+            if (!string.IsNullOrEmpty(categoryId) && int.TryParse(categoryId, out int catId))
+            {
+                filteredPosts = filteredPosts.Where(j => j.JobCategoryId == catId);
+            }
+
+            var totalItems = filteredPosts.Count();
+            var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+            var paged = filteredPosts.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            return new PagedResult<JobPostVM>
+            {
+                Items = _mapper.Map<List<JobPostVM>>(paged),
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                CurrentPage = page
+            };
+        }
     }
 }
