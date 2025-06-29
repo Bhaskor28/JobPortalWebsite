@@ -1,6 +1,6 @@
-﻿namespace JobPortal.Application.Categories
+﻿namespace JobPortal.Application.LocationList
 {
-    public class CategoryVM
+    public class LocationVM
     {
         public int Id { get; set; }
         public string Name { get; set; }

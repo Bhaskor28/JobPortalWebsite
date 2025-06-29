@@ -1,46 +1,56 @@
 ﻿using JobPortal.Application.Categories;
+using JobPortal.Application.Companies;
+using JobPortal.Application.EmploymentTypes;
+using JobPortal.Application.Experiences;
 using JobPortal.Application.JobPosts;
-using JobPortal.Application.Repository;
-using JobPortal.Domain.Entities;
-using JobPortal.Infrastructure.Data;
+using JobPortal.Application.LocationList;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobPortal.Web.Controllers
 {
     public class JobController : Controller
     {
-        private readonly IJobPostService _jobpostservice;
-        private readonly ICategoryService _categoryservice;
+        private readonly IJobPostService _jobposts;
+        private readonly ICategoryService _categories;
+        private readonly ICompanyService _company;
+        private readonly IEmploymentTypeService _employment;
+        private readonly ILocationService _locationService;
+        private readonly IExperienceService _experienceService;
 
-        public JobController(IJobPostService jobpostservice,ICategoryService categoryservice)
+        public JobController(IJobPostService jobposts, ICategoryService category, ICompanyService company, IEmploymentTypeService employment, ILocationService locationService, IExperienceService experienceService)
         {
-            _jobpostservice = jobpostservice;
-            _categoryservice = categoryservice;
+            _jobposts = jobposts;
+            _categories = category;
+            _company = company;
+            _employment = employment;
+            _locationService = locationService;
+            _experienceService = experienceService;
         }
-        public async Task<IActionResult> Index(string categoryId,int page = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(List<int> selectedEmploymentTypes, List<int> selectedExperienceList, int categoryId, int locationId, int pageNumber = 1)
         {
-            IEnumerable<JobPostVM> allItems = await _jobpostservice.GetAllJobPostAsync();
-            var categories = await _categoryservice.GetAllCategoryAsync();
-            if (!string.IsNullOrEmpty(categoryId))
+            int pageSize = 7;
+            ViewBag.Categories = await _categories.GetAllCategoryAsync();
+            ViewBag.EmploymentTypes = await _employment.GetAllEmploymentTypeAsync();
+            ViewBag.Locations = await _locationService.GetAllLocationAsync();
+            ViewBag.Experiences = await _experienceService.GetAllExperienceAsync();
+            ViewBag.SelectedCategoryId = categoryId;
+            ViewBag.SelectedLocationId = locationId;
+            ViewBag.SelectedEmploymentTypes = selectedEmploymentTypes;
+            ViewBag.SelectedExperienceList = selectedExperienceList;
+            var pagedJobposts = await _jobposts.GetPagedFilteredJobpostAsync(selectedEmploymentTypes, selectedExperienceList, categoryId, locationId, pageNumber, pageSize);
+            return View(pagedJobposts);
+        }
+        public async Task<IActionResult> Details(int id)
+        {
+            var jobpost = await _jobposts.GetJobpostByIdAsync(id);
+            if (jobpost == null)
             {
-                int catId = int.Parse(categoryId);
-                allItems = allItems.Where(j => j.JobCategoryId == catId);
-                
-                var selectedCategory = categories.FirstOrDefault(c => c.Id == catId);
-                ViewBag.CategoryName = selectedCategory?.Name ?? "Unknown";
+                return NotFound();
             }
-            else
-            {
-                ViewBag.CategoryName = "All";
-            }
-            var totalItems = allItems.Count();
-            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-            var pagedItems = allItems.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            ViewBag.Categories = categories;
-            ViewBag.TotalPages = totalPages;
-            ViewBag.CurrentPage = page;
-            ViewBag.TotalItems = totalItems;
-            return View(pagedItems);
+            ViewBag.Company = await _company.GetCompanyByIdAsync(jobpost.CompanyId);
+            ViewBag.EmploymentType = await _employment.GetEmploymentTypeByIdAsync(jobpost.EmploymentTypeId);
+            ViewBag.Locations = await _locationService.GetLocationByIdAsync(jobpost.LocationId);
+            return View(jobpost);
         }
     }
 }

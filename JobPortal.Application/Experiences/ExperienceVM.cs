@@ -1,6 +1,6 @@
-﻿namespace JobPortal.Application.Categories
+﻿namespace JobPortal.Application.Experiences
 {
-    public class CategoryVM
+    public class ExperienceVM
     {
         public int Id { get; set; }
         public string Name { get; set; }

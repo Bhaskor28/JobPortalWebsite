@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using JobPortal.Application.Common.PaginatedLists;
 using JobPortal.Application.Repository;
 using JobPortal.Domain.Entities;
 
@@ -14,10 +15,22 @@ namespace JobPortal.Application.EmploymentTypes
             _employment = employment;
             _mapper = mapper;
         }
-        public async Task<IList<EmploymentTypeVM>> GetAllEmploymentTypeAsync()
+
+        public async Task<IEnumerable<EmploymentTypeVM>> GetAllEmploymentTypeAsync()
         {
-            var employments = await _employment.GetAllAsync();
-            return _mapper.Map<IList<EmploymentTypeVM>>(employments);
+            var employmentTypes = await _employment.GetAllAsync();
+            return _mapper.Map<IEnumerable<EmploymentTypeVM>>(employmentTypes);
+        }
+
+        public async Task<EmploymentTypeVM> GetEmploymentTypeByIdAsync(int employmentTypeId)
+        {
+            var employmentType = await _employment.GetByIdAsync(employmentTypeId);
+            return _mapper.Map<EmploymentTypeVM>(employmentType);
+        }
+
+        public Task<PaginatedList<EmploymentTypeVM>> GetPagedEmploymentTypeAsync(int pageNumber, int pageSize)
+        {
+            throw new NotImplementedException();
         }
     }
 }

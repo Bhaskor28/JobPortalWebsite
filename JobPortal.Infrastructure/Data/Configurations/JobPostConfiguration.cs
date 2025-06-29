@@ -12,6 +12,13 @@ namespace JobPortal.Infrastructure.Data.Configurations
                 .WithMany(c => c.JobPosts)
                 .HasForeignKey(j => j.JobCategoryId);
 
+
+            builder.HasOne(j => j.Company)
+                .WithMany(c => c.JobPosts)
+                .HasForeignKey(j => j.CompanyId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
         }
     }
 }
