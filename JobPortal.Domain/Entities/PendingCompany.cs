@@ -1,10 +1,10 @@
-﻿using JobPortal.Domain.Enums;
+﻿using JobPortal.Domain.Common;
+using JobPortal.Domain.Enums;
 
-namespace JobPortal.Application.Companies
+namespace JobPortal.Domain.Entities
 {
-    public class CompanyVM
+    public class PendingCompany: BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string? Website { get; set; }
         public string? Email { get; set; }
@@ -13,8 +13,6 @@ namespace JobPortal.Application.Companies
         public string? CompanySize { get; set; }
         public string? About { get; set; }
         public string? LogoPath { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public CompanyStatus? Status { get; set; } = CompanyStatus.Requested;
-
+        public CompanyStatus Status { get; set; } = CompanyStatus.Requested;
     }
 }

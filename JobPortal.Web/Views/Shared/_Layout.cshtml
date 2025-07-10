@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="~/assets/css/slick.css">
     <link rel="stylesheet" href="~/assets/css/nice-select.css">
     <link rel="stylesheet" href="~/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5-premium-features/45.2.1/ckeditor5-premium-features.css" />
+
     
 </head>
 <body>
@@ -264,6 +266,24 @@
     <!-- Jquery Plugins, main Jquery -->
     <script src="~/assets/js/plugins.js"></script>
     <script src="~/assets/js/main.js"></script>
+    <!-- Load classic CKEditor from CDN -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+    <!-- Initialize with bullet/number list enabled -->
+    <script>
+        const editorIDs = ['experienceEditor', 'educationalRequirementEditor', 'descriptionEditor','companyDescription'];
+
+        editorIDs.forEach(id => {
+            ClassicEditor.create(document.querySelector('#' + id))
+                .catch(error => {
+                    console.error(`Error initializing CKEditor on ${id}:`, error);
+                });
+        });
+    </script>
+
+
+
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

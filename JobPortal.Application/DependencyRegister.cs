@@ -4,6 +4,7 @@ using JobPortal.Application.EmploymentTypes;
 using JobPortal.Application.Experiences;
 using JobPortal.Application.JobPosts;
 using JobPortal.Application.LocationList;
+using JobPortal.Application.Pending;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace JobPortal.Application
@@ -18,6 +19,7 @@ namespace JobPortal.Application
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IExperienceService, ExperienceService>();
+            services.AddScoped<IPendingCompanyService, PendingCompanyService>();
             return services;
         }
     }

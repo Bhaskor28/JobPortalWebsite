@@ -40,7 +40,18 @@ namespace JobPortal.Application.Companies
         {
             throw new NotImplementedException();
         }
+        public async Task<CompanyVM> UpdateCompanyAsync(CompanyVM model)
+        {
+            var existingCompany = await _companyService.GetByIdAsync(model.Id);
+            if (existingCompany == null)
+            {
+                throw new KeyNotFoundException("Company Not Found.");
+            }
+            _mapper.Map(model, existingCompany);
+            await _companyService.UpdateAsync(existingCompany);
+            return _mapper.Map<CompanyVM>(existingCompany);
+        }
 
 
-    }
+        }
 }

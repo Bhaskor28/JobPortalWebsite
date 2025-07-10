@@ -8,6 +8,7 @@ namespace JobPortal.Application.Companies
         Task<PaginatedList<CompanyVM>> GetPagedCompanyAsync(int pageNumber, int pageSize);
         Task<CompanyVM> GetCompanyByIdAsync(int compnayId);
         Task<CompanyVM> AddCompanyAsync(CompanyVM model);
+        Task<CompanyVM> UpdateCompanyAsync(CompanyVM model);
 
     }
 }

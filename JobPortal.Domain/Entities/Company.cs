@@ -1,4 +1,5 @@
 ﻿using JobPortal.Domain.Common;
+using JobPortal.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace JobPortal.Domain.Entities
@@ -19,6 +20,7 @@ namespace JobPortal.Domain.Entities
         [StringLength(1000, ErrorMessage = "About section is too long.")]
         public string? About { get; set; }
         public string? LogoPath { get; set; }
+        public CompanyStatus? Status { get; set; } = CompanyStatus.Requested;
         public ICollection<JobPost>? JobPosts { get; set; }
     }
 }

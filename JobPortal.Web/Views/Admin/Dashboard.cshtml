@@ -1,0 +1,72 @@
+﻿@using JobPortal.Application.Pending
+@model IEnumerable<PendingCompanyVM>
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="pt-5 pb-5">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm p-3">
+                    <h4 class="mb-3">🛠 Admin Panel</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item "><a class="text-black-50" href="#"> Company Requests</a></li>
+                        <li class="list-group-item"><a class="text-black-50" href="#"> Manage Job Posts</a></li>
+                        <li class="list-group-item"><a class="text-black-50" href="#"> Manage Users</a></li>
+                        <li class="list-group-item"><a class="text-black-50" href="#"> Reports</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <div class="card shadow-sm p-4">
+                    <h3 class="mb-4"> Pending Company Requests</h3>
+
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Logo</th>
+                                <th>Company</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var compnay in Model)
+                            {
+                                <tr>
+                                    <td><img src="/images/demo-logo1.png" width="50" class="rounded" /></td>
+                                    <td>@compnay.Name</td>
+                                    <td>@compnay.Email</td>
+                                    <td><span class="badge bg-warning">@compnay.Status.ToString()</span></td>
+                                    <td>
+                                        <form asp-action="ChangeCompanyStatus" asp-controller="Admin" method="post">
+                                            <div class="d-flex">
+                                                <input type="hidden" name="companyId" value="@compnay.Id" />
+                                                <a asp-action="ViewPendingCompany" asp-controller="Admin" asp-route-id="@compnay.Id" class="btn btn-info m-1">View</a>
+                                                <button name="status" value="Approved" class="btn btn-success m-1">Approve</button>
+                                                <button name="status" value="Discarded" class="btn btn-danger m-1">Decline</button>
+                                            </div>
+                                        
+                                        </form>
+                                        
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

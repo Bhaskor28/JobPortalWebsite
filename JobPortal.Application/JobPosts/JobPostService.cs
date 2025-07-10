@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using JobPortal.Application.Common;
 using JobPortal.Application.Common.PaginatedLists;
 using JobPortal.Application.Repository;
 using JobPortal.Domain.Entities;
