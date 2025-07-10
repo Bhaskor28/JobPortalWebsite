@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JobPortal.Application.Common.PaginatedLists;
+using JobPortal.Application.JobPosts;
 using JobPortal.Application.Repository;
 using JobPortal.Domain.Entities;
 
@@ -31,5 +32,18 @@ namespace JobPortal.Application.LocationList
         {
             throw new NotImplementedException();
         }
+        public async Task<LocationVM?> GetByNameAsync(string name)
+        {
+            var location = await _locationRepository.FindAsync(loc => loc.Name.ToLower() == name.ToLower());
+            return _mapper.Map<LocationVM>(location);
+        }
+        public async Task<LocationVM> AddLocationAsync(LocationVM location)
+        {
+            var newLocation = _mapper.Map<Location>(location);
+            var saveLocation = await _locationRepository.AddAsync(newLocation);
+            return _mapper.Map<LocationVM>(saveLocation);
+
+        }
+
     }
 }

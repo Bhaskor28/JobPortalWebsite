@@ -6,6 +6,7 @@ using JobPortal.Application.Experiences;
 
 using JobPortal.Application.JobPosts;
 using JobPortal.Application.LocationList;
+using JobPortal.Application.Pending;
 using JobPortal.Domain.Entities;
 
 namespace JobPortal.Application.Profiles
@@ -20,6 +21,7 @@ namespace JobPortal.Application.Profiles
             CreateMap<Company, CompanyVM>().ReverseMap();
             CreateMap<Location, LocationVM>().ReverseMap();
             CreateMap<Experience, ExperienceVM>().ReverseMap();
+            CreateMap<PendingCompany, PendingCompanyVM>().ReverseMap();
 
         }
     }

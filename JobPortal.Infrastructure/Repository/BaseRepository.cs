@@ -2,6 +2,7 @@
 using JobPortal.Domain.Common;
 using JobPortal.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace JobPortal.Infrastructure.Repository
 {
@@ -48,6 +49,15 @@ namespace JobPortal.Infrastructure.Repository
             _dbSet.Update(entity);
             await _context.SaveChangesAsync();
 
+        }
+        public async Task<T?> FindAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.FirstOrDefaultAsync(predicate);
+        }
+
+        public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.Where(predicate).ToListAsync();
         }
     }
 }

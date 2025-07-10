@@ -1,8 +1,8 @@
 ﻿using JobPortal.Domain.Enums;
 
-namespace JobPortal.Application.Companies
+namespace JobPortal.Application.Pending
 {
-    public class CompanyVM
+    public class PendingCompanyVM
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -14,7 +14,6 @@ namespace JobPortal.Application.Companies
         public string? About { get; set; }
         public string? LogoPath { get; set; }
         public DateTime CreatedAt { get; set; }
-        public CompanyStatus? Status { get; set; } = CompanyStatus.Requested;
-
+        public CompanyStatus Status { get; set; } = CompanyStatus.Requested;
     }
 }

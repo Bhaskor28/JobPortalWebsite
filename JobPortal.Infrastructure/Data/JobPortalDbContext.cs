@@ -17,6 +17,7 @@ namespace JobPortal.Infrastructure.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<EmploymentType> EmploymentTypes { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<PendingCompany> PendingCompanies { get; set; }
 
     }
 }

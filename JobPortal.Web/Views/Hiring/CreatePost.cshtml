@@ -71,7 +71,13 @@
                                 <!-- Location -->
                                 <div class="col-md-6">
                                     <label asp-for="LocationId" class="form-label">Location</label>
-                                    <input asp-for="LocationId" type="text" class="form-control">
+                                    <select asp-for="LocationId" class="form-select">
+                                        <option selected disabled>--select any--</option>
+                                        @foreach (var location in ViewBag.Locations)
+                                        {
+                                            <option value="@location.Id">@location.Name</option>
+                                        }
+                                    </select>
                                     <span asp-validation-for="LocationId" class="text-danger"></span>
                                 </div>
 
@@ -103,23 +109,22 @@
                                 <!-- Education Requirement -->
                                 <div class="col-12">
                                     <label asp-for="EducationRequirement" class="form-label">Education Requirement</label>
-                                    <input asp-for="EducationRequirement" type="text" class="form-control">
+                                    <textarea class="form-control" asp-for="EducationRequirement" id="educationalRequirementEditor"></textarea>
+                                    <span asp-validation-for="EducationRequirement" class="text-danger"></span>
                                     
                                 </div>
 
                                 <!-- Experience Requirement -->
                                 <div class="col-12">
                                     <label asp-for="ExperienceRequirement" class="form-label">Experience Requirement</label>
-                                    <input asp-for="ExperienceRequirement" type="text" class="form-control" value="Minimum 3 years in .NET Core development">
-                                    <span asp-validation-for="EducationRequirement" class="text-danger"></span>
+                                    <textarea class="form-control" asp-for="ExperienceRequirement" id="experienceEditor"></textarea>
+                                    <span asp-validation-for="EducationRequirement" class="text-danger" ></span>
                                 </div>
 
                                 <!-- Description -->
                                 <div class="col-12">
                                     <label asp-for="Description" class="form-label">Job Description</label>
-                                    <textarea asp-for="Description" class="form-control" rows="4">
-Responsible for designing and developing backend services using .NET Core and Entity Framework.
-Collaborate with front-end teams and product owners.
+                                    <textarea asp-for="Description" class="form-control" rows="4" id="descriptionEditor">
                                     </textarea>
                                     <span asp-validation-for="Description" class="text-danger"></span>
                                 </div>
